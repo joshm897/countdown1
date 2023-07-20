@@ -33,6 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
     timeDifference %= 7 * 24 * 60 * 60 * 1000;
+
+    if (!showWeeks) {
+      days += weeks * 7; // Adjust the days directly based on weeks if weeks are hidden
+    }
+
     let days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
     timeDifference %= 24 * 60 * 60 * 1000;
     let hours = Math.floor(timeDifference / (60 * 60 * 1000));
