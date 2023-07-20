@@ -21,6 +21,9 @@ body {
 }
 
 #settings-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
   padding: 10px 20px;
   background-color: #3498db;
   color: white;
@@ -35,7 +38,10 @@ body {
 }
 
 #settings {
-  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 300px;
   padding: 20px;
   background-color: #fff;
@@ -59,7 +65,7 @@ body {
 #settings input[type="text"],
 #settings input[type="date"],
 #settings input[type="time"],
-#settings select {
+#settings input[type="number"] {
   width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
