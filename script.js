@@ -67,19 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
     countdown.textContent = countdownText.trim();
   }
 
-  function initializeSettings() {
+    function initializeSettings() {
     eventNameInput.value = 'school';
     eventDateInput.valueAsDate = new Date('2023-08-22');
     eventTimeInput.value = '08:30';
 
-    // Calculate the sign and absolute value of the timezone offset
     const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
     const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
 
-    // Set the timeZoneInput value with the proper sign
     timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
 
-    // Update the countdown with the correct timezone offset
     updateCountdown();
 
     showWeeksCheckbox.checked = showWeeks;
@@ -102,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateSettings() {
     eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
 
-    // Calculate the difference between the new user-selected timezone and the original timezone
     const timeZoneValue = Number(timeZoneInput.value);
     const timeZoneSign = timeZoneValue < 0 ? -1 : 1;
     const selectedTimeZoneOffset = timeZoneValue * 60 * 1000 * timeZoneSign;
@@ -128,6 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initializeSettings();
 
+  updateSettings();
+
   eventNameInput.addEventListener('change', updateSettings);
   eventDateInput.addEventListener('change', updateSettings);
   eventTimeInput.addEventListener('change', updateSettings);
@@ -138,8 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
   showMinutesCheckbox.addEventListener('change', updateSettings);
   showSecondsCheckbox.addEventListener('change', updateSettings);
   showMillisecondsCheckbox.addEventListener('change', updateSettings);
-
-  updateSettings();
 
   setInterval(updateCountdown, 10);
 });
