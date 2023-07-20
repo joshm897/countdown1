@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCountdown() {
     const now = new Date();
-    let timeDifference = eventDate - now - timeZoneOffset;
+    let timeDifference = eventDate - now + timeZoneOffset; // Adjust the timezone offset
 
     if (timeDifference <= 0) {
       countdown.textContent = 'The event has already passed!';
@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   showSecondsCheckbox.addEventListener('change', updateSettings);
   showMillisecondsCheckbox.addEventListener('change', updateSettings);
 
-  // Call the updateCountdown function initially to show the countdown on page load
   updateCountdown();
+
+  setInterval(updateCountdown, 10);
 });
