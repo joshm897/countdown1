@@ -5,36 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const eventNameInput = document.getElementById('eventName');
   const eventDateInput = document.getElementById('eventDate');
   const eventTimeInput = document.getElementById('eventTime');
-  const timeZoneSelect = document.getElementById('timeZone');
+  const timeZoneInput = document.getElementById('timeZone');
   const showWeeksCheckbox = document.getElementById('showWeeks');
   const showDaysCheckbox = document.getElementById('showDays');
   const showHoursCheckbox = document.getElementById('showHours');
   const showMinutesCheckbox = document.getElementById('showMinutes');
   const showSecondsCheckbox = document.getElementById('showSeconds');
   const showMillisecondsCheckbox = document.getElementById('showMilliseconds');
-  const darkModeCheckbox = document.getElementById('darkMode');
 
   let eventDate = new Date('2023-08-22T08:30:00');
-  let timeZoneOffset = eventDate.getTimezoneOffset() * 60 * 1000;
-  let darkMode = false;
+  let timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
   let showWeeks = false;
   let showDays = true;
   let showHours = true;
   let showMinutes = true;
   let showSeconds = true;
   let showMilliseconds = false;
-
-  function updateSettings() {
-    eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
-    timeZoneOffset = -(new Date().getTimezoneOffset() * 60 * 1000);
-    darkMode = darkModeCheckbox.checked;
-    showWeeks = showWeeksCheckbox.checked;
-    showDays = showDaysCheckbox.checked;
-    showHours = showHoursCheckbox.checked;
-    showMinutes = showMinutesCheckbox.checked;
-    showSeconds = showSecondsCheckbox.checked;
-    showMilliseconds = showMillisecondsCheckbox.checked;
-  }
 
   function updateCountdown() {
     const now = new Date();
@@ -69,39 +55,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
+    if (settings.style.display === 'block') {
+      updateCountdown();
+    }
   }
 
   settingsBtn.addEventListener('click', toggleSettings);
-  eventNameInput.addEventListener('input', updateSettings);
-  eventDateInput.addEventListener('change', updateSettings);
-  eventTimeInput.addEventListener('change', updateSettings);
-  timeZoneSelect.addEventListener('change', updateSettings);
-  showWeeksCheckbox.addEventListener('change', updateSettings);
-  showDaysCheckbox.addEventListener('change', updateSettings);
-  showHoursCheckbox.addEventListener('change', updateSettings);
-  showMinutesCheckbox.addEventListener('change', updateSettings);
-  showSecondsCheckbox.addEventListener('change', updateSettings);
-  showMillisecondsCheckbox.addEventListener('change', updateSettings);
-  darkModeCheckbox.addEventListener('change', () => {
-    darkMode = darkModeCheckbox.checked;
-    document.body.classList.toggle('dark', darkMode);
+  eventNameInput.addEventListener('input', () => {
+    updateCountdown();
+  });
+  eventDateInput.addEventListener('change', () => {
+    eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
+    updateCountdown();
+  });
+  eventTimeInput.addEventListener('change', () => {
+    eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
+    updateCountdown();
+  });
+  timeZoneInput.addEventListener('input', () => {
+    timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000;
+    updateCountdown();
+  });
+  showWeeksCheckbox.addEventListener('change', () => {
+    showWeeks = showWeeksCheckbox.checked;
+    updateCountdown();
+  });
+  showDaysCheckbox.addEventListener('change', () => {
+    showDays = showDaysCheckbox.checked;
+    updateCountdown();
+  });
+  showHoursCheckbox.addEventListener('change', () => {
+    showHours = showHoursCheckbox.checked;
+    updateCountdown();
+  });
+  showMinutesCheckbox.addEventListener('change', () => {
+    showMinutes = showMinutesCheckbox.checked;
+    updateCountdown();
+  });
+  showSecondsCheckbox.addEventListener('change', () => {
+    showSeconds = showSecondsCheckbox.checked;
+    updateCountdown();
+  });
+  showMillisecondsCheckbox.addEventListener('change', () => {
+    showMilliseconds = showMillisecondsCheckbox.checked;
+    updateCountdown();
   });
 
-  // Populate timezone options
-  const timeZones = [
-    { offset: -720, name: 'UTC-12:00' },
-    { offset: -660, name: 'UTC-11:00' },
-    // Add more timezone options here if needed
-  ];
-
-  timeZones.forEach(timeZone => {
-    const option = document.createElement('option');
-    option.value = timeZone.offset;
-    option.textContent = timeZone.name;
-    timeZoneSelect.appendChild(option);
-  });
-
-  // Call the updateSettings and updateCountdown functions initially to set up the initial state
-  updateSettings();
+  // Call the updateCountdown function initially to show the countdown on page load
   updateCountdown();
 });
