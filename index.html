@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="countdown">
+    <div class="countdown" style="display: none;">
       <span class="days"></span>
       <span class="hours"></span>
       <span class="minutes"></span>
@@ -16,7 +16,7 @@
       <span class="milliseconds"></span>
     </div>
     <button id="settings-btn">Settings</button>
-    <div id="settings">
+    <div id="settings" style="display: none;">
       <h3>Settings</h3>
       <label for="eventName">Event Name:</label>
       <input type="text" id="eventName">
@@ -24,8 +24,8 @@
       <input type="date" id="eventDate">
       <label for="eventTime">Event Time:</label>
       <input type="time" id="eventTime">
-      <label for="timeZone">Timezone:</label>
-      <select id="timeZone"></select>
+      <label for="timeZone">Timezone Offset (in minutes):</label>
+      <input type="number" id="timeZone">
       <div>
         <input type="checkbox" id="showWeeks">
         <label for="showWeeks">Show Weeks</label>
@@ -49,10 +49,6 @@
       <div>
         <input type="checkbox" id="showMilliseconds">
         <label for="showMilliseconds">Show Milliseconds</label>
-      </div>
-      <div>
-        <input type="checkbox" id="darkMode">
-        <label for="darkMode">Dark Mode</label>
       </div>
     </div>
   </div>
