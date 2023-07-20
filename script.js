@@ -31,27 +31,38 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
+    let weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
     timeDifference %= 7 * 24 * 60 * 60 * 1000;
-    const days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+    let days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
     timeDifference %= 24 * 60 * 60 * 1000;
-    const hours = Math.floor(timeDifference / (60 * 60 * 1000));
+    let hours = Math.floor(timeDifference / (60 * 60 * 1000));
     timeDifference %= 60 * 60 * 1000;
-    const minutes = Math.floor(timeDifference / (60 * 1000));
+    let minutes = Math.floor(timeDifference / (60 * 1000));
     timeDifference %= 60 * 1000;
-    const seconds = Math.floor(timeDifference / 1000);
+    let seconds = Math.floor(timeDifference / 1000);
     const milliseconds = timeDifference % 1000;
+
+    // Push values from higher units to lower units if they are hidden
+    if (!showWeeks) {
+      days += weeks * 7;
+    }
+    if (!showDays) {
+      hours += days * 24;
+    }
+    if (!showHours) {
+      minutes += hours * 60;
+    }
+    if (!showMinutes) {
+      seconds += minutes * 60;
+    }
 
     let countdownText = '';
     if (showWeeks && weeks > 0) countdownText += `${weeks}w `;
-    if (showDays) {
-      const adjustedDays = showWeeks ? days : days + weeks * 7;
-      countdownText += `${adjustedDays}d `;
-    }
-    if (showHours) countdownText += `${hours}h `;
-    if (showMinutes) countdownText += `${minutes}m `;
-    if (showSeconds) countdownText += `${seconds}s `;
-    if (showMilliseconds) countdownText += `${milliseconds}ms`;
+    if (showDays && days > 0) countdownText += `${days}d `;
+    if (showHours && hours > 0) countdownText += `${hours}h `;
+    if (showMinutes && minutes > 0) countdownText += `${minutes}m `;
+    if (showSeconds && seconds > 0) countdownText += `${seconds}s `;
+    if (showMilliseconds && milliseconds > 0) countdownText += `${milliseconds}ms`;
 
     countdown.textContent = countdownText.trim();
   }
