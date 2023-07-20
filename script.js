@@ -67,18 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     countdown.textContent = countdownText.trim();
   }
   
-  function initializeSettings() {
-    eventNameInput.value = 'school';
-    eventDateInput.valueAsDate = new Date('2023-08-22');
-    eventTimeInput.value = '08:30';
-    timeZoneInput.value = timeZoneOffset / (60 * 1000);
-    showWeeksCheckbox.checked = showWeeks;
-    showDaysCheckbox.checked = showDays;
-    showHoursCheckbox.checked = showHours;
-    showMinutesCheckbox.checked = showMinutes;
-    showSecondsCheckbox.checked = showSeconds;
-    showMillisecondsCheckbox.checked = showMilliseconds;
-  }
+function initializeSettings() {
+  eventNameInput.value = 'school';
+  eventDateInput.valueAsDate = new Date('2023-08-22');
+  eventTimeInput.value = '08:30';
+  timeZoneInput.value = timeZoneOffset / (60 * 1000); // Divide by 60 * 1000 to convert from milliseconds to minutes
+  showWeeksCheckbox.checked = showWeeks;
+  showDaysCheckbox.checked = showDays;
+  showHoursCheckbox.checked = showHours;
+  showMinutesCheckbox.checked = showMinutes;
+  showSecondsCheckbox.checked = showSeconds;
+  showMillisecondsCheckbox.checked = showMilliseconds;
+}
   
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
@@ -89,18 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function updateSettings() {
-    eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
-    timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000;
-    showWeeks = showWeeksCheckbox.checked;
-    showDays = showDaysCheckbox.checked;
-    showHours = showHoursCheckbox.checked;
-    showMinutes = showMinutesCheckbox.checked;
-    showSeconds = showSecondsCheckbox.checked;
-    showMilliseconds = showMillisecondsCheckbox.checked;
+function updateSettings() {
+  eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
+  timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000; // Multiply by 60 * 1000 to convert from minutes to milliseconds
+  showWeeks = showWeeksCheckbox.checked;
+  showDays = showDaysCheckbox.checked;
+  showHours = showHoursCheckbox.checked;
+  showMinutes = showMinutesCheckbox.checked;
+  showSeconds = showSecondsCheckbox.checked;
+  showMilliseconds = showMillisecondsCheckbox.checked;
 
-    updateCountdown();
-  }
+  updateCountdown();
+}
 
   settingsBtn.addEventListener('click', toggleSettings);
 
