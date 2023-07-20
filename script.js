@@ -52,7 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     countdown.textContent = countdownText.trim();
   }
-
+  
+  function initializeSettings() {
+    eventNameInput.value = 'school';
+    eventDateInput.valueAsDate = new Date('2023-08-22');
+    eventTimeInput.value = '08:30';
+    timeZoneInput.value = timeZoneOffset / (60 * 1000);
+    showWeeksCheckbox.checked = showWeeks;
+    showDaysCheckbox.checked = showDays;
+    showHoursCheckbox.checked = showHours;
+    showMinutesCheckbox.checked = showMinutes;
+    showSecondsCheckbox.checked = showSeconds;
+    showMillisecondsCheckbox.checked = showMilliseconds;
+  }
+  
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
     if (settings.style.display === 'block') {
@@ -76,6 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   settingsBtn.addEventListener('click', toggleSettings);
+
+  // Call the initializeSettings function initially to set the settings' input values
+  initializeSettings();
+
+  // Add event listeners to each setting's input element to update the countdown when any setting is changed
+  eventNameInput.addEventListener('change', updateSettings);
+  eventDateInput.addEventListener('change', updateSettings);
+  eventTimeInput.addEventListener('change', updateSettings);
+  timeZoneInput.addEventListener('change', updateSettings);
+  showWeeksCheckbox.addEventListener('change', updateSettings);
+  showDaysCheckbox.addEventListener('change', updateSettings);
+  showHoursCheckbox.addEventListener('change', updateSettings);
+  showMinutesCheckbox.addEventListener('change', updateSettings);
+  showSecondsCheckbox.addEventListener('change', updateSettings);
+  showMillisecondsCheckbox.addEventListener('change', updateSettings);
 
   // Call the updateCountdown function initially to show the countdown on page load
   updateCountdown();
