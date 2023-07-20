@@ -56,50 +56,26 @@ document.addEventListener('DOMContentLoaded', () => {
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
     if (settings.style.display === 'block') {
+      updateSettings();
+    } else {
       updateCountdown();
     }
   }
 
-  settingsBtn.addEventListener('click', toggleSettings);
-  eventNameInput.addEventListener('input', () => {
-    updateCountdown();
-  });
-  eventDateInput.addEventListener('change', () => {
+  function updateSettings() {
     eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
-    updateCountdown();
-  });
-  eventTimeInput.addEventListener('change', () => {
-    eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
-    updateCountdown();
-  });
-  timeZoneInput.addEventListener('input', () => {
     timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000;
-    updateCountdown();
-  });
-  showWeeksCheckbox.addEventListener('change', () => {
     showWeeks = showWeeksCheckbox.checked;
-    updateCountdown();
-  });
-  showDaysCheckbox.addEventListener('change', () => {
     showDays = showDaysCheckbox.checked;
-    updateCountdown();
-  });
-  showHoursCheckbox.addEventListener('change', () => {
     showHours = showHoursCheckbox.checked;
-    updateCountdown();
-  });
-  showMinutesCheckbox.addEventListener('change', () => {
     showMinutes = showMinutesCheckbox.checked;
-    updateCountdown();
-  });
-  showSecondsCheckbox.addEventListener('change', () => {
     showSeconds = showSecondsCheckbox.checked;
-    updateCountdown();
-  });
-  showMillisecondsCheckbox.addEventListener('change', () => {
     showMilliseconds = showMillisecondsCheckbox.checked;
+
     updateCountdown();
-  });
+  }
+
+  settingsBtn.addEventListener('click', toggleSettings);
 
   // Call the updateCountdown function initially to show the countdown on page load
   updateCountdown();
