@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCountdown() {
     const now = new Date();
-    let timeDifference = eventDate - now + timeZoneOffset; // Adjust the timezone offset
+    let timeDifference = eventDate - now + timeZoneOffset;
 
     if (timeDifference <= 0) {
       countdown.textContent = 'The event has already passed!';
@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
     timeDifference %= 7 * 24 * 60 * 60 * 1000;
-    let days = Math.floor(timeDifference / (24 * 60 * 60 * 1000)); // Move the days declaration here
+    let days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
 
     if (!showWeeks) {
-      days += weeks * 7; // Adjust the days directly based on weeks if weeks are hidden
+      days += weeks * 7;
     }
 
     timeDifference %= 24 * 60 * 60 * 1000;
@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let seconds = Math.floor(timeDifference / 1000);
     const milliseconds = timeDifference;
 
-    // Calculate total milliseconds directly
     const totalMilliseconds =
       weeks * 7 * 24 * 60 * 60 * 1000 +
       days * 24 * 60 * 60 * 1000 +
@@ -72,11 +71,9 @@ function initializeSettings() {
   eventDateInput.valueAsDate = new Date('2023-08-22');
   eventTimeInput.value = '08:30';
   
-  // Calculate the sign and absolute value of the timezone offset
   const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
   const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
   
-  // Set the timeZoneInput value with the proper sign
   timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
   
   showWeeksCheckbox.checked = showWeeks;
@@ -99,10 +96,9 @@ function initializeSettings() {
 function updateSettings() {
   eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
   
-  // Parse the timeZoneInput value to extract the sign and value
   const timeZoneValue = Number(timeZoneInput.value);
   const timeZoneSign = timeZoneValue < 0 ? -1 : 1;
-  timeZoneOffset = timeZoneValue * 60 * 1000 * timeZoneSign; // Convert to milliseconds
+  timeZoneOffset = timeZoneValue * 60 * 1000 * timeZoneSign;
   
   showWeeks = showWeeksCheckbox.checked;
   showDays = showDaysCheckbox.checked;
@@ -116,10 +112,8 @@ function updateSettings() {
 
   settingsBtn.addEventListener('click', toggleSettings);
 
-  // Call the initializeSettings function initially to set the settings' input values
   initializeSettings();
 
-  // Add event listeners to each setting's input element to update the countdown when any setting is changed
   eventNameInput.addEventListener('change', updateSettings);
   eventDateInput.addEventListener('change', updateSettings);
   eventTimeInput.addEventListener('change', updateSettings);
@@ -131,7 +125,7 @@ function updateSettings() {
   showSecondsCheckbox.addEventListener('change', updateSettings);
   showMillisecondsCheckbox.addEventListener('change', updateSettings);
 
-  updateCountdown();
+  updateSettings();
 
   setInterval(updateCountdown, 10);
 });
