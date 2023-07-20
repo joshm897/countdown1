@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="countdown">
+      <span class="days"></span>
+      <span class="hours"></span>
+      <span class="minutes"></span>
+      <span class="seconds"></span>
+      <span class="milliseconds"></span>
+    </div>
+    <button id="settings-btn">Settings</button>
+    <div id="settings">
+      <h3>Settings</h3>
+      <label for="eventName">Event Name:</label>
+      <input type="text" id="eventName">
+      <label for="eventDate">Event Date:</label>
+      <input type="date" id="eventDate">
+      <label for="eventTime">Event Time:</label>
+      <input type="time" id="eventTime">
+      <label for="timeZone">Timezone:</label>
+      <select id="timeZone"></select>
+      <div>
+        <input type="checkbox" id="showWeeks">
+        <label for="showWeeks">Show Weeks</label>
+      </div>
+      <div>
+        <input type="checkbox" id="showDays">
+        <label for="showDays">Show Days</label>
+      </div>
+      <div>
+        <input type="checkbox" id="showHours">
+        <label for="showHours">Show Hours</label>
+      </div>
+      <div>
+        <input type="checkbox" id="showMinutes">
+        <label for="showMinutes">Show Minutes</label>
+      </div>
+      <div>
+        <input type="checkbox" id="showSeconds">
+        <label for="showSeconds">Show Seconds</label>
+      </div>
+      <div>
+        <input type="checkbox" id="showMilliseconds">
+        <label for="showMilliseconds">Show Milliseconds</label>
+      </div>
+      <div>
+        <input type="checkbox" id="darkMode">
+        <label for="darkMode">Dark Mode</label>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
