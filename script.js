@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newDate = new Date(now.getTime());
       newDate.setMonth(newDate.getMonth() + months);
       days -= getDaysBetween(now, newDate);
+      months = 0; // Reset months to 0 since it's not being shown
     }
 
     const weeks = Math.floor(days / 7);
@@ -120,6 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showMinutesCheckbox.checked = showMinutes;
     showSecondsCheckbox.checked = showSeconds;
     showMillisecondsCheckbox.checked = showMilliseconds;
+
+    // Update the countdown with the initial settings
+    updateCountdown();
   }
 
   function toggleSettings() {
