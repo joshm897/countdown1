@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const eventDateInput = document.getElementById('eventDate');
   const eventTimeInput = document.getElementById('eventTime');
   const timeZoneInput = document.getElementById('timeZone');
+  const showYearsCheckbox = document.getElementById('showYears');
+  const showMonthsCheckbox = document.getElementById('showMonths');
   const showWeeksCheckbox = document.getElementById('showWeeks');
   const showDaysCheckbox = document.getElementById('showDays');
   const showHoursCheckbox = document.getElementById('showHours');
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
-  
+
   function updateCountdown() {
     const now = new Date();
     let timeDifference = eventDate - now + timeZoneOffset; // Adjust the timezone offset
@@ -68,38 +70,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const preciseDays = getDaysBetween(now, now.getTime() + timeDifference);
 
     // Continue with the previous calculations
-    const months = Math.floor(preciseDays / 30);
-    timeDifference -= months * 30 * 24 * 60 * 60 * 1000;
-    const weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
-    timeDifference %= 7 * 24 * 60 * 60 * 1000;
-    const days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-    timeDifference %= 24 * 60 * 60 * 1000;
+    let months = 0;
+    let days = preciseDays;
+
+    if (!showYears) {
+      months += years * 12;
+      days -= getDaysBetween(now, now.setFullYear(now.getFullYear() + years));
+    }
+
+    if (!showMonths) {
+      const newDate = new Date(now.getTime());
+      newDate.setMonth(newDate.getMonth() + months);
+      days -= getDaysBetween(now, newDate);
+    }
+
+    const weeks = Math.floor(days / 7);
+    days %= 7;
+
     const hours = Math.floor(timeDifference / (60 * 60 * 1000));
     timeDifference %= 60 * 60 * 1000;
     const minutes = Math.floor(timeDifference / (60 * 1000));
     timeDifference %= 60 * 1000;
     const seconds = Math.floor(timeDifference / 1000);
     const milliseconds = timeDifference;
-
-    // Push values from higher units to lower units if they are hidden
-    if (!showYears) {
-      months += years * 12;
-    }
-    if (!showMonths) {
-      weeks += months * 4;
-    }
-    if (!showWeeks) {
-      days += weeks * 7;
-    }
-    if (!showDays) {
-      hours += days * 24;
-    }
-    if (!showHours) {
-      minutes += hours * 60;
-    }
-    if (!showMinutes) {
-      seconds += minutes * 60;
-    }
 
     let countdownText = '';
     if (showYears && years > 0) countdownText += `${years}y `;
@@ -113,12 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     countdown.textContent = countdownText.trim();
   }
-  
+
   function initializeSettings() {
     eventNameInput.value = 'school';
     eventDateInput.valueAsDate = new Date('2023-08-22');
     eventTimeInput.value = '08:30';
     timeZoneInput.value = timeZoneOffset / (60 * 1000);
+    showYearsCheckbox.checked = showYears;
+    showMonthsCheckbox.checked = showMonths;
     showWeeksCheckbox.checked = showWeeks;
     showDaysCheckbox.checked = showDays;
     showHoursCheckbox.checked = showHours;
@@ -126,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showSecondsCheckbox.checked = showSeconds;
     showMillisecondsCheckbox.checked = showMilliseconds;
   }
-  
+
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
     if (settings.style.display === 'block') {
@@ -139,6 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateSettings() {
     eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
     timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000;
+    showYears = showYearsCheckbox.checked;
+    showMonths = showMonthsCheckbox.checked;
     showWeeks = showWeeksCheckbox.checked;
     showDays = showDaysCheckbox.checked;
     showHours = showHoursCheckbox.checked;
@@ -159,6 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
   eventDateInput.addEventListener('change', updateSettings);
   eventTimeInput.addEventListener('change', updateSettings);
   timeZoneInput.addEventListener('change', updateSettings);
+  showYearsCheckbox.addEventListener('change', updateSettings);
+  showMonthsCheckbox.addEventListener('change', updateSettings);
   showWeeksCheckbox.addEventListener('change', updateSettings);
   showDaysCheckbox.addEventListener('change', updateSettings);
   showHoursCheckbox.addEventListener('change', updateSettings);
@@ -166,7 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
   showSecondsCheckbox.addEventListener('change', updateSettings);
   showMillisecondsCheckbox.addEventListener('change', updateSettings);
 
+  // Update the countdown initially
   updateCountdown();
 
+  // Update the countdown every 10 milliseconds
   setInterval(updateCountdown, 10);
 });
