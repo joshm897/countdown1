@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let eventDate = new Date('2023-08-22T08:30:00');
   let timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
-  let originalTimeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  let originalTimeZoneOffset = timeZoneOffset; // Store the original offset separately
   let showWeeks = false;
   let showDays = true;
   let showHours = true;
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateCountdown() {
     const now = new Date();
     let timeDifference = eventDate - now + originalTimeZoneOffset;
-
 
     if (timeDifference <= 0) {
       countdown.textContent = 'The event has already passed!';
@@ -68,23 +67,25 @@ document.addEventListener('DOMContentLoaded', () => {
     countdown.textContent = countdownText.trim();
   }
   
-function initializeSettings() {
-  eventNameInput.value = 'school';
-  eventDateInput.valueAsDate = new Date('2023-08-22');
-  eventTimeInput.value = '08:30';
+  function initializeSettings() {
+    eventNameInput.value = 'school';
+    eventDateInput.valueAsDate = new Date('2023-08-22');
+    eventTimeInput.value = '08:30';
 
-  const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
-  const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
+    // Calculate the sign and absolute value of the timezone offset
+    const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
+    const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
 
-  timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
+    // Set the timeZoneInput value with the proper sign
+    timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
 
-  showWeeksCheckbox.checked = showWeeks;
-  showDaysCheckbox.checked = showDays;
-  showHoursCheckbox.checked = showHours;
-  showMinutesCheckbox.checked = showMinutes;
-  showSecondsCheckbox.checked = showSeconds;
-  showMillisecondsCheckbox.checked = showMilliseconds;
-}
+    showWeeksCheckbox.checked = showWeeks;
+    showDaysCheckbox.checked = showDays;
+    showHoursCheckbox.checked = showHours;
+    showMinutesCheckbox.checked = showMinutes;
+    showSecondsCheckbox.checked = showSeconds;
+    showMillisecondsCheckbox.checked = showMilliseconds;
+  }
   
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
