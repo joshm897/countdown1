@@ -15,13 +15,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let eventDate = new Date('2023-08-22T08:30:00');
   let timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  let showYears = false;
+  let showMonths = false;
   let showWeeks = false;
   let showDays = true;
   let showHours = true;
   let showMinutes = true;
   let showSeconds = true;
-  let showMilliseconds = false;
+  let showMilliseconds = true;
 
+  function getDaysBetween(startDate, endDate) {
+    const startYear = startDate.getFullYear();
+    const startMonth = startDate.getMonth();
+    const endYear = endDate.getFullYear();
+    const endMonth = endDate.getMonth();
+
+    let days = 0;
+
+    for (let year = startYear; year < endYear; year++) {
+      days += isLeapYear(year) ? 366 : 365;
+    }
+
+    for (let month = 0; month <= endMonth; month++) {
+      if (month === startMonth && startYear === endYear) {
+        days += endDate.getDate() - startDate.getDate();
+      } else {
+        const lastDayOfMonth = new Date(endYear, month + 1, 0).getDate();
+        days += lastDayOfMonth;
+      }
+    }
+
+    return days;
+  }
+
+  function isLeapYear(year) {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
+  
   function updateCountdown() {
     const now = new Date();
     let timeDifference = eventDate - now + timeZoneOffset; // Adjust the timezone offset
@@ -31,18 +61,33 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    let weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
+    const years = Math.floor(timeDifference / (365 * 24 * 60 * 60 * 1000));
+    timeDifference %= 365 * 24 * 60 * 60 * 1000;
+
+    // Calculate the number of days precisely
+    const preciseDays = getDaysBetween(now, now.getTime() + timeDifference);
+
+    // Continue with the previous calculations
+    const months = Math.floor(preciseDays / 30);
+    timeDifference -= months * 30 * 24 * 60 * 60 * 1000;
+    const weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
     timeDifference %= 7 * 24 * 60 * 60 * 1000;
-    let days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+    const days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
     timeDifference %= 24 * 60 * 60 * 1000;
-    let hours = Math.floor(timeDifference / (60 * 60 * 1000));
+    const hours = Math.floor(timeDifference / (60 * 60 * 1000));
     timeDifference %= 60 * 60 * 1000;
-    let minutes = Math.floor(timeDifference / (60 * 1000));
+    const minutes = Math.floor(timeDifference / (60 * 1000));
     timeDifference %= 60 * 1000;
-    let seconds = Math.floor(timeDifference / 1000);
-    const milliseconds = timeDifference % 1000;
+    const seconds = Math.floor(timeDifference / 1000);
+    const milliseconds = timeDifference;
 
     // Push values from higher units to lower units if they are hidden
+    if (!showYears) {
+      months += years * 12;
+    }
+    if (!showMonths) {
+      weeks += months * 4;
+    }
     if (!showWeeks) {
       days += weeks * 7;
     }
@@ -57,6 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let countdownText = '';
+    if (showYears && years > 0) countdownText += `${years}y `;
+    if (showMonths && months > 0) countdownText += `${months}mo `;
     if (showWeeks && weeks > 0) countdownText += `${weeks}w `;
     if (showDays && days > 0) countdownText += `${days}d `;
     if (showHours && hours > 0) countdownText += `${hours}h `;
