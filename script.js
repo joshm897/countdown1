@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const showMillisecondsCheckbox = document.getElementById('showMilliseconds');
 
   let eventDate = new Date('2023-08-22T08:30:00');
-  let timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  let timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000;
   let showYears = false;
   let showMonths = false;
   let showWeeks = false;
