@@ -67,15 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
     countdown.textContent = countdownText.trim();
   }
 
-    function initializeSettings() {
+  function initializeSettings() {
     eventNameInput.value = 'school';
     eventDateInput.valueAsDate = new Date('2023-08-22');
     eventTimeInput.value = '08:30';
 
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
     const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
 
-    timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
+    timeZoneInput.value = userTimeZone;
 
     updateCountdown();
 
