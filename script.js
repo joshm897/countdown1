@@ -71,7 +71,14 @@ function initializeSettings() {
   eventNameInput.value = 'school';
   eventDateInput.valueAsDate = new Date('2023-08-22');
   eventTimeInput.value = '08:30';
-  timeZoneInput.value = timeZoneOffset / (60 * 1000); // Divide by 60 * 1000 to convert from milliseconds to minutes
+  
+  // Calculate the sign and absolute value of the timezone offset
+  const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
+  const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
+  
+  // Set the timeZoneInput value with the proper sign
+  timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
+  
   showWeeksCheckbox.checked = showWeeks;
   showDaysCheckbox.checked = showDays;
   showHoursCheckbox.checked = showHours;
@@ -91,7 +98,12 @@ function initializeSettings() {
 
 function updateSettings() {
   eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
-  timeZoneOffset = Number(timeZoneInput.value) * 60 * 1000; // Multiply by 60 * 1000 to convert from minutes to milliseconds
+  
+  // Parse the timeZoneInput value to extract the sign and value
+  const timeZoneValue = Number(timeZoneInput.value);
+  const timeZoneSign = timeZoneValue < 0 ? -1 : 1;
+  timeZoneOffset = timeZoneValue * 60 * 1000 * timeZoneSign; // Convert to milliseconds
+  
   showWeeks = showWeeksCheckbox.checked;
   showDays = showDaysCheckbox.checked;
   showHours = showHoursCheckbox.checked;
