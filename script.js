@@ -44,11 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let countdownText = '';
     if (showWeeks && weeks > 0) countdownText += `${weeks}w `;
-    if (showDays && days > 0) countdownText += `${days}d `;
-    if (showHours && hours > 0) countdownText += `${hours}h `;
-    if (showMinutes && minutes > 0) countdownText += `${minutes}m `;
-    if (showSeconds && seconds > 0) countdownText += `${seconds}s `;
-    if (showMilliseconds && milliseconds > 0) countdownText += `${milliseconds}ms`;
+    if (showDays) {
+      const adjustedDays = showWeeks ? days : days + weeks * 7;
+      countdownText += `${adjustedDays}d `;
+    }
+    if (showHours) countdownText += `${hours}h `;
+    if (showMinutes) countdownText += `${minutes}m `;
+    if (showSeconds) countdownText += `${seconds}s `;
+    if (showMilliseconds) countdownText += `${milliseconds}ms`;
 
     countdown.textContent = countdownText.trim();
   }
