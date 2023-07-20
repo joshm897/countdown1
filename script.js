@@ -43,12 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const milliseconds = timeDifference % 1000;
 
     let countdownText = '';
-    if (showWeeks) countdownText += `${weeks}w `;
-    if (showDays) countdownText += `${days}d `;
-    if (showHours) countdownText += `${hours}h `;
-    if (showMinutes) countdownText += `${minutes}m `;
-    if (showSeconds) countdownText += `${seconds}s `;
-    if (showMilliseconds) countdownText += `${milliseconds}ms`;
+    if (showWeeks && weeks > 0) countdownText += `${weeks}w `;
+    if (showDays && days > 0) countdownText += `${days}d `;
+    if (showHours && hours > 0) countdownText += `${hours}h `;
+    if (showMinutes && minutes > 0) countdownText += `${minutes}m `;
+    if (showSeconds && seconds > 0) countdownText += `${seconds}s `;
+    if (showMilliseconds && milliseconds > 0) countdownText += `${milliseconds}ms`;
 
     countdown.textContent = countdownText.trim();
   }
