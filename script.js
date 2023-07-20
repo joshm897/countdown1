@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     countdown.textContent = countdownText.trim();
   }
-  
+
   function initializeSettings() {
     eventNameInput.value = 'school';
     eventDateInput.valueAsDate = new Date('2023-08-22');
@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set the timeZoneInput value with the proper sign
     timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
 
+    // Update the countdown with the correct timezone offset
+    updateCountdown();
+
     showWeeksCheckbox.checked = showWeeks;
     showDaysCheckbox.checked = showDays;
     showHoursCheckbox.checked = showHours;
@@ -86,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showSecondsCheckbox.checked = showSeconds;
     showMillisecondsCheckbox.checked = showMilliseconds;
   }
-  
+
   function toggleSettings() {
     settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
     if (settings.style.display === 'block') {
