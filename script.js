@@ -72,12 +72,12 @@ function initializeSettings() {
   eventNameInput.value = 'school';
   eventDateInput.valueAsDate = new Date('2023-08-22');
   eventTimeInput.value = '08:30';
-  
+
   const timeZoneSign = timeZoneOffset < 0 ? '-' : '+';
   const timeZoneAbsValue = Math.abs(timeZoneOffset) / (60 * 1000);
-  
+
   timeZoneInput.value = timeZoneSign + timeZoneAbsValue;
-  
+
   showWeeksCheckbox.checked = showWeeks;
   showDaysCheckbox.checked = showDays;
   showHoursCheckbox.checked = showHours;
