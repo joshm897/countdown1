@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let eventDate = new Date('2023-08-22T08:30:00');
   let timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+  let originalTimeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
   let showWeeks = false;
   let showDays = true;
   let showHours = true;
@@ -24,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCountdown() {
     const now = new Date();
-    let timeDifference = eventDate - now + timeZoneOffset;
+    let timeDifference = eventDate - now + originalTimeZoneOffset;
+
 
     if (timeDifference <= 0) {
       countdown.textContent = 'The event has already passed!';
@@ -93,11 +95,19 @@ function initializeSettings() {
     }
   }
 
-function updateSettings() {
-  eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
-  
-  const timeZoneValue = Number(timeZoneInput.value);
-  const timeZoneSign = timeZoneValue < 0 ? -1 : 1;
+  function updateSettings() {
+    eventDate = new Date(`${eventDateInput.value}T${eventTimeInput.value}`);
+
+    // Calculate the difference between the new user-selected timezone and the original timezone
+    const timeZoneValue = Number(timeZoneInput.value);
+    const timeZoneSign = timeZoneValue < 0 ? -1 : 1;
+    const selectedTimeZoneOffset = timeZoneValue * 60 * 1000 * timeZoneSign;
+    const timeZoneDifference = selectedTimeZoneOffset - originalTimeZoneOffset;
+
+  eventDate = new Date(eventDate.getTime() - timeZoneDifference);
+
+  originalTimeZoneOffset = selectedTimeZoneOffset;
+
   timeZoneOffset = timeZoneValue * 60 * 1000 * timeZoneSign;
   
   showWeeks = showWeeksCheckbox.checked;
